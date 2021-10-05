@@ -11,6 +11,7 @@ import {
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
 import StackNavigator from './src/navigators/Stack';
+import {NavigationContainer} from '@react-navigation/native';
 
 export default () => (
   <React.Fragment>

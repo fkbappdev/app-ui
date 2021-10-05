@@ -6,14 +6,21 @@ import {
   TopNavigationAction,
 } from '@ui-kitten/components';
 
-export const Header = ({scene, previous, navigation}) => {
+// kendi header componentimiz
+
+export const Header = ({options, route, navigation}) => {
+  // geri gel ikonu
   const BackIcon = props => <Icon {...props} name="arrow-back" />;
 
   const BackAction = () => {
-    previous ? <TopNavigationAction icon={BackIcon} /> : null;
+    return (
+      <TopNavigationAction
+        onPress={() => navigation.goBack()}
+        icon={BackIcon}
+      />
+    );
   };
 
-  const {options} = scene.descriptor;
   const title =
     options.headerTitle !== undefined
       ? options.headerTitle
