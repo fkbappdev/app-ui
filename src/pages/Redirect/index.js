@@ -1,6 +1,8 @@
 import React from 'react';
-import {Layout, Button, Text} from '@ui-kitten/components';
+import {View, Text, Button, Card} from 'react-native-ui-lib';
+import {ImageBackground} from 'react-native';
 import styles from './styles';
+import Logo from '../../components/Logo';
 
 export default function Redirect({navigation}) {
   const PlayOnlineAction = () => {
@@ -8,23 +10,40 @@ export default function Redirect({navigation}) {
   };
 
   return (
-    <Layout style={styles.container}>
-      {/* TOP */}
-      <Layout style={styles.top}>
-        <Text style={styles.logo}>LOGO</Text>
-      </Layout>
-      {/* BOTTOM */}
-      <Layout style={styles.bottom}>
-        <Button style={styles.button} appearance="outline">
-          <Text style={styles.buttonText}>Play Single</Text>
-        </Button>
-        <Button
-          onPress={() => PlayOnlineAction()}
-          style={styles.button}
-          appearance="outline">
-          <Text style={styles.buttonText}>Play Online</Text>
-        </Button>
-      </Layout>
-    </Layout>
+    <ImageBackground
+      style={styles.background}
+      source={require('../../assets/images/background.png')}>
+      <View style={styles.container}>
+        {/* TOP */}
+        <View style={styles.top}>
+          <Logo />
+        </View>
+        {/* BOTTOM */}
+        <View style={styles.bottom}>
+          <Button
+            bg-primaryColor
+            enableShadow
+            onPress={() => PlayOnlineAction()}
+            style={styles.button}>
+            <Text
+              style={{fontFamily: 'BubblegumSans-Regular'}}
+              secondary
+              bold
+              bubblegumSans>
+              Play Single
+            </Text>
+          </Button>
+          <Button
+            bg-primaryColor
+            enableShadow
+            onPress={() => PlayOnlineAction()}
+            style={styles.button}>
+            <Text secondary bold>
+              Play Online
+            </Text>
+          </Button>
+        </View>
+      </View>
+    </ImageBackground>
   );
 }

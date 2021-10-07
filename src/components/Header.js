@@ -11,7 +11,7 @@ import {
 export const Header = ({options, route, navigation}) => {
   // geri gel ikonu
   const BackIcon = props => <Icon {...props} name="arrow-back" />;
-
+  
   const BackAction = () => {
     return (
       <TopNavigationAction

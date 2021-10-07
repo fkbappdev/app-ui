@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Layout, Text} from '@ui-kitten/components';
+import {View, Text} from 'react-native-ui-lib';
 import styles from './styles';
 
 export default function Splash({navigation}) {
@@ -10,8 +10,8 @@ export default function Splash({navigation}) {
   }, []);
 
   return (
-    <Layout style={styles.container}>
+    <View style={styles.container}>
       <Text>LOGO</Text>
-    </Layout>
+    </View>
   );
 }

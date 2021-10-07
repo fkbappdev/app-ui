@@ -8,11 +8,17 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   bottom: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-around',
-    alignItems: 'center',
+    width: '100%',
   },
   button: {
     margin: 10,
+  },
+  background: {
+    flex: 1,
+  },
+  buttonText: {
+    color: '#fff',
   },
 });

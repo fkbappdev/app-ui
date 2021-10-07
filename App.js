@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {
+/*import {
   ApplicationProvider,
   Button,
   Icon,
@@ -9,31 +9,35 @@ import {
   Text,
 } from '@ui-kitten/components';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
-import * as eva from '@eva-design/eva';
+import * as eva from '@eva-design/eva';*/
 import StackNavigator from './src/navigators/Stack';
 import {NavigationContainer} from '@react-navigation/native';
+import {Colors, Typography, Spacings, ThemeManager} from 'react-native-ui-lib';
+
+ThemeManager.setComponentTheme('Text', {
+  regular: true,
+  body: true,
+});
+
+Colors.loadColors({
+  primaryColor: '#FFFFFF',
+  secondary: '#FF6821',
+  error: '#ff2442',
+  success: '#00CD8B',
+  text: '#FF6821',
+});
+
+Typography.loadTypographies({
+  bold: {fontWeight: 'bold', fontSize: 20},
+  bubblegumSans: {
+    fontFamily: 'BubblegumSans-Regular',
+  },
+});
 
 export default () => (
   <React.Fragment>
-    <IconRegistry icons={EvaIconsPack} />
-    <ApplicationProvider {...eva} theme={eva.light}>
-      <NavigationContainer>
-        <StackNavigator></StackNavigator>
-      </NavigationContainer>
-    </ApplicationProvider>
+    <NavigationContainer>
+      <StackNavigator></StackNavigator>
+    </NavigationContainer>
   </React.Fragment>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    textAlign: 'center',
-  },
-  likeButton: {
-    marginVertical: 16,
-  },
-});
