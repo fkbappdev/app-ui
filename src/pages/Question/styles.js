@@ -6,12 +6,14 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
+    backgroundColor: '#F9F3DF',
   },
   bottom: {
     width: '100%',
   },
   button: {
-    margin: 10,
+    marginBottom: '10%',
+    width: '100%',
   },
   background: {
     flex: 1,
@@ -19,4 +21,26 @@ export default StyleSheet.create({
   buttonText: {
     color: '#fff',
   },
+  top: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: '20%',
+    margin: 15,
+  },
+  topTexts: {
+    justifyContent: 'space-between',
+  },
+  topText: {
+    marginBottom: 10,
+  },
+  questionText: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  question: {
+    marginTop: '5%',
+  },
+  center: {marginTop: '5%'},
 });

@@ -25,6 +25,8 @@ Colors.loadColors({
   error: '#ff2442',
   success: '#00CD8B',
   text: '#FF6821',
+  pastelOrange: '#662900',
+  pastelOrangeBg: '#F4D19B',
 });
 
 Typography.loadTypographies({

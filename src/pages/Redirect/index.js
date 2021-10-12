@@ -9,9 +9,13 @@ export default function Redirect({navigation}) {
     navigation.navigate('LoginAndRegister');
   };
 
+  const PlayOfflineAction = () => {
+    navigation.navigate('Question');
+  };
+
   return (
     <ImageBackground
-      style={styles.background}
+      style={{flex: 1}}
       source={require('../../assets/images/background.png')}>
       <View style={styles.container}>
         {/* TOP */}
@@ -23,7 +27,7 @@ export default function Redirect({navigation}) {
           <Button
             bg-primaryColor
             enableShadow
-            onPress={() => PlayOnlineAction()}
+            onPress={() => PlayOfflineAction()}
             style={styles.button}>
             <Text
               style={{fontFamily: 'BubblegumSans-Regular'}}
