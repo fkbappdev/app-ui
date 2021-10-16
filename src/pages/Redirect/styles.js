@@ -6,6 +6,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
+    backgroundColor: '#F9F3DF',
   },
   bottom: {
     flexDirection: 'column',
@@ -21,4 +22,9 @@ export default StyleSheet.create({
   buttonText: {
     color: '#fff',
   },
+  text: {
+    fontFamily: 'BubblegumSans-Regular',
+    color: "#662900",
+    fontSize: 20,
+  }
 });

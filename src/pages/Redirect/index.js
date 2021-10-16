@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, Button, Card} from 'react-native-ui-lib';
-import {ImageBackground} from 'react-native';
+import {View, Button, Card} from 'react-native-ui-lib';
+import {ImageBackground, Text} from 'react-native';
 import styles from './styles';
 import Logo from '../../components/Logo';
 
@@ -14,9 +14,6 @@ export default function Redirect({navigation}) {
   };
 
   return (
-    <ImageBackground
-      style={{flex: 1}}
-      source={require('../../assets/images/background.png')}>
       <View style={styles.container}>
         {/* TOP */}
         <View style={styles.top}>
@@ -25,29 +22,25 @@ export default function Redirect({navigation}) {
         {/* BOTTOM */}
         <View style={styles.bottom}>
           <Button
-            bg-primaryColor
+            bg-pastelOrangeBg
             enableShadow
             onPress={() => PlayOfflineAction()}
             style={styles.button}>
             <Text
-              style={{fontFamily: 'BubblegumSans-Regular'}}
-              secondary
-              bold
-              bubblegumSans>
+              style={styles.text}>
               Play Single
             </Text>
           </Button>
           <Button
-            bg-primaryColor
+            bg-pastelOrangeBg
             enableShadow
             onPress={() => PlayOnlineAction()}
             style={styles.button}>
-            <Text secondary bold>
+            <Text style={styles.text}>
               Play Online
             </Text>
           </Button>
         </View>
       </View>
-    </ImageBackground>
   );
 }

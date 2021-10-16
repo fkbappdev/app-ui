@@ -1,27 +1,24 @@
 import React, {useEffect} from 'react';
-import {TabBar, Tab, Layout, Text} from '@ui-kitten/components';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-
-import LoginPage from './Login';
-import RegisterPage from './Register';
+import {Card, Colors, Button} from 'react-native-ui-lib';
+import {View, Text} from 'react-native';
 import styles from './styles';
 
-const {Navigator, Screen} = createMaterialTopTabNavigator();
-
-const TopTabBar = ({navigation, state}) => (
-  <TabBar
-    selectedIndex={state.index}
-    onSelect={index => navigation.navigate(state.routeNames[index])}>
-    <Tab title="LOGIN" />
-    <Tab title="REGISTER" />
-  </TabBar>
-);
+// pages
+import LoginPage from './Login';
+import RegisterPage from './Register';
 
 export default function LoginAndRegister() {
-  return (
-    <Navigator tabBar={props => <TopTabBar {...props} />}>
-      <Screen name="Login" component={LoginPage} />
-      <Screen name="Register" component={RegisterPage} />
-    </Navigator>
-  );
+  const [Page, SetPage] = React.useState(0); 
+    return (
+        <View style={styles.container}>
+            <Card
+                style={styles.card}
+                width="100%"
+                height={240}
+                activeOpacity={1}
+                >
+                  { Page === 0 ? <LoginPage setPage={SetPage}/> : <RegisterPage setPage={SetPage}/> }
+            </Card>
+        </View>
+    );
 }

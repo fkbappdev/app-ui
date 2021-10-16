@@ -29,7 +29,15 @@ export default function StackNavigator() {
       <Stack.Screen
         name="LoginAndRegister"
         component={LoginAndRegister}
-        options={{headerTitle: 'Login & Register', headerTransparent: true}}
+        options={{
+          headerTitle: 'Login & Register',
+          headerTitleAlign: 'center',
+          headerTintColor: '#662900',
+          headerTitleStyle: {
+            color: '#662900',
+          },
+          headerTransparent: true,
+        }}
       />
 
       <Stack.Screen
