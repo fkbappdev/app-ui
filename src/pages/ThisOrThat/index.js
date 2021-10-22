@@ -7,24 +7,18 @@ import {
   ProgressBar,
   Colors,
   Picker,
-  Dialog,
-  TextField,
 } from 'react-native-ui-lib';
 import {FlatList} from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
-export default function Quizzes({navigation}) {
+export default function ThisOrThat({navigation}) {
   const [question, setQuestion] = React.useState(0);
   const [questionAnswers, setQuestionAnswers] = React.useState([]);
   const [questions, setQuestions] = React.useState([]);
   const [numberOfQuestion, setNumberOfQuestion] = React.useState(null);
   const [page, setPage] = React.useState(0);
   const [topText, setTopText] = React.useState('');
-  const [categorys, setCategorys] = React.useState([]);
-
-  const [dialog, setDialog] = React.useState(false);
-  const [dialogText, setDialogText] = React.useState('');
 
   // will remove
   function decodeHTMLEntities(str) {
@@ -37,49 +31,6 @@ export default function Quizzes({navigation}) {
       .replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gim, '');
   }
 
-  const DefaultCategorys = [
-    {
-      id: 1,
-      name: 'Lifestyle',
-    },
-    {
-      id: 2,
-      name: 'Music',
-    },
-    {
-      id: 3,
-      name: 'Sport',
-    },
-    {
-      id: 4,
-      name: 'Movies',
-    },
-    {
-      id: 5,
-      name: 'Travel',
-    },
-    {
-      id: 6,
-      name: 'Food',
-    },
-    {
-      id: 7,
-      name: 'Games',
-    },
-    {
-      id: 8,
-      name: 'Books',
-    },
-    {
-      id: 9,
-      name: 'Hobbies',
-    },
-    {
-      id: 10,
-      name: 'Random',
-    },
-  ];
-
   const questionNumbers = [10, 15, 20, 25];
 
   React.useEffect(async () => {
@@ -87,42 +38,36 @@ export default function Quizzes({navigation}) {
       setPage(0);
       setTopText('Please select number of question: ');
       return;
-    } else if (categorys.length == 0) {
-      setPage(1);
-      setTopText('Please select categorys: ');
-      return;
-    } else if (numberOfQuestion != 0 && categorys.length != 0 && page == 4) {
+    } else if (numberOfQuestion != 0 && page == 3) {
       let request = await fetch(
         `https://opentdb.com/api.php?amount=${numberOfQuestion}&category=9&difficulty=easy&type=multiple`,
       );
       let json = await request.json();
 
+      setQuestions(json.results);
       setQuestion(0);
       setTopText(json.results[0].question);
 
-      let ques = json.results.map(q => {
-        let answers = [];
-        q.incorrect_answers.map(answer => {
-          answers.push({answer: answer, isCorrect: false, selected: false});
-        });
-        answers.push({
-          answer: q.correct_answer,
-          isCorrect: true,
-          selected: false,
-        });
-        q.answers = answers;
-        return q;
+      // answers
+      let answers = [];
+      json.results[0].incorrect_answers.map(answer => {
+        answers.push({answer: answer, isCorrect: false});
       });
+      answers.push({answer: json.results[0].correct_answer, isCorrect: true});
 
-      setQuestions(ques);
-      setQuestionAnswers(ques[0].answers);
+      setQuestionAnswers(answers);
       setPage(2);
     }
   }, [numberOfQuestion, categorys, page]);
 
   function setNewQuestion(number) {
     var q = questions[number];
-    setQuestionAnswers(q.answers);
+    let answers = [];
+    q.incorrect_answers.map(answer => {
+      answers.push({answer: answer, isCorrect: false});
+    });
+    answers.push({answer: q.correct_answer, isCorrect: true});
+    setQuestionAnswers(answers);
     setTopText(q.question);
     setQuestion(number);
   }
@@ -130,33 +75,17 @@ export default function Quizzes({navigation}) {
   const AnswerItem = ({item}) => {
     return (
       <View style={styles.questionNumberItem}>
-        <Button
-          onPress={() => {
-            var q = questions;
-            q[question].answers = q[question].answers.map(answer => {
-              let selected = answer.answer == item.answer;
-              answer.selected = selected;
-              return answer;
-            });
-            setQuestions(q);
-            setQuestionAnswers(q[question].answers);
-          }}
-          bg-pastelOrangeBg
-          enableShadow
-          style={styles.button}>
-          <View style={styles.AnswerItem}>
-            {item.selected && <Icon name="done" size={25} color={'#662900'} />}
-            <Text
-              style={{
-                width: '100%',
-                textAlign: 'center',
-              }}
-              pastelOrange
-              bold
-              bubblegumSans>
-              {item.answer}
-            </Text>
-          </View>
+        <Button bg-pastelOrangeBg enableShadow style={styles.button}>
+          <Text
+            style={{
+              width: '100%',
+              textAlign: 'center',
+            }}
+            pastelOrange
+            bold
+            bubblegumSans>
+            {item.answer}
+          </Text>
         </Button>
       </View>
     );
@@ -236,19 +165,6 @@ export default function Quizzes({navigation}) {
       </Button>
     );
   };
-
-  const renderPannableHeader = props => {
-    const {title} = props;
-    return (
-      <View>
-        <View margin-20>
-          <Text>{title}</Text>
-        </View>
-        <View height={2} bg-grey70 />
-      </View>
-    );
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -330,7 +246,7 @@ export default function Quizzes({navigation}) {
             </View>
           ) : (
             <FlatList
-              extraData={questions}
+              extraData={page}
               data={page == 0 ? questionNumbers : questionAnswers}
               renderItem={({item}) =>
                 page == 0 ? (
@@ -373,9 +289,6 @@ export default function Quizzes({navigation}) {
                 marginRight: 5,
               }}>
               <Button
-                onPress={() => {
-                  setDialog(true);
-                }}
                 style={{
                   height: 50,
                   width: 10,
@@ -419,60 +332,6 @@ export default function Quizzes({navigation}) {
           </View>
         )}
       </View>
-      <Dialog
-        useSafeArea
-        key={0}
-        height={200}
-        style={{
-          marginTop: 20,
-        }}
-        containerStyle={styles.roundedDialog}
-        visible={dialog}
-        renderPannableHeader={renderPannableHeader}
-        pannableHeaderProps={{
-          title: 'Type your answer',
-        }}
-        ignoreBackgroundPress={false}>
-        <View style={{flex: 1, margin: 20}}>
-          <TextField
-            label="Answer"
-            value={dialogText}
-            onChangeText={text => setDialogText(text)}
-          />
-          <Button
-            onPress={() => {
-              questions[question].answers.remove();
-              questions[question].answers.push({
-                answer: dialogText,
-                isCorrect: false,
-                selected: false,
-              });
-              setDialogText('');
-              setDialog(false);
-              questions[question].answers =
-                questions[question].answers.shuffle();
-            }}
-            bg-pastelOrangeBg
-            enableShadow
-            style={[
-              styles.button,
-              {
-                alignSelf: 'center',
-              },
-            ]}>
-            <Text
-              pastelOrange
-              bold
-              bubblegumSans
-              style={{
-                width: '100%',
-                textAlign: 'center',
-              }}>
-              Add
-            </Text>
-          </Button>
-        </View>
-      </Dialog>
     </View>
   );
 }

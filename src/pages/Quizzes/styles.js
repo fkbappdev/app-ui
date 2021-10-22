@@ -4,15 +4,19 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-around',
     alignItems: 'center',
+    justifyContent: 'space-between',
     backgroundColor: '#F9F3DF',
   },
   bottom: {
-    width: '100%',
+    marginBottom: '3%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   button: {
-    marginBottom: '10%',
+    padding: 10,
+    marginBottom: '5%',
     width: '100%',
   },
   background: {
@@ -24,13 +28,15 @@ export default StyleSheet.create({
   top: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: '20%',
-    margin: 15,
+    marginTop: '10%',
   },
   topTexts: {
     justifyContent: 'space-between',
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: '5%',
   },
   topText: {
     marginBottom: 10,
@@ -42,8 +48,20 @@ export default StyleSheet.create({
   question: {
     marginTop: '5%',
   },
-  center: {marginTop: '5%'},
   categorys: {
     flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  questionNumberItem: {
+    margin: 10,
+  },
+  roundedDialog: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+  },
+  AnswerItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
