@@ -10,37 +10,32 @@ export default function Redirect({navigation}) {
   };
 
   const PlayOfflineAction = () => {
-    navigation.navigate('Question');
+    navigation.navigate('Options');
   };
 
   return (
-      <View style={styles.container}>
-        {/* TOP */}
-        <View style={styles.top}>
-          <Logo />
-        </View>
-        {/* BOTTOM */}
-        <View style={styles.bottom}>
-          <Button
-            bg-pastelOrangeBg
-            enableShadow
-            onPress={() => PlayOfflineAction()}
-            style={styles.button}>
-            <Text
-              style={styles.text}>
-              Play Single
-            </Text>
-          </Button>
-          <Button
-            bg-pastelOrangeBg
-            enableShadow
-            onPress={() => PlayOnlineAction()}
-            style={styles.button}>
-            <Text style={styles.text}>
-              Play Online
-            </Text>
-          </Button>
-        </View>
+    <View style={styles.container}>
+      {/* TOP */}
+      <View style={styles.top}>
+        <Logo />
       </View>
+      {/* BOTTOM */}
+      <View style={styles.bottom}>
+        <Button
+          bg-pastelOrangeBg
+          enableShadow
+          onPress={() => PlayOfflineAction()}
+          style={styles.button}>
+          <Text style={styles.text}>Play Single</Text>
+        </Button>
+        <Button
+          bg-pastelOrangeBg
+          enableShadow
+          onPress={() => PlayOnlineAction()}
+          style={styles.button}>
+          <Text style={styles.text}>Play Online</Text>
+        </Button>
+      </View>
+    </View>
   );
 }
