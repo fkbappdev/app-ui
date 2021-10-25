@@ -7,10 +7,13 @@ import {
   ProgressBar,
   Colors,
   Picker,
+  Dialog,
+  TextField,
 } from 'react-native-ui-lib';
 import {FlatList} from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import SwipeCards from 'react-native-swipe-cards';
 
 export default function ThisOrThat({navigation}) {
   const [question, setQuestion] = React.useState(0);
@@ -19,6 +22,9 @@ export default function ThisOrThat({navigation}) {
   const [numberOfQuestion, setNumberOfQuestion] = React.useState(null);
   const [page, setPage] = React.useState(0);
   const [topText, setTopText] = React.useState('');
+
+  const [dialog, setDialog] = React.useState(false);
+  const [dialogText, setDialogText] = React.useState('');
 
   // will remove
   function decodeHTMLEntities(str) {
@@ -38,36 +44,39 @@ export default function ThisOrThat({navigation}) {
       setPage(0);
       setTopText('Please select number of question: ');
       return;
-    } else if (numberOfQuestion != 0 && page == 3) {
+    } else if (numberOfQuestion != 0 && page == 4) {
       let request = await fetch(
         `https://opentdb.com/api.php?amount=${numberOfQuestion}&category=9&difficulty=easy&type=multiple`,
       );
       let json = await request.json();
 
-      setQuestions(json.results);
       setQuestion(0);
       setTopText(json.results[0].question);
 
-      // answers
-      let answers = [];
-      json.results[0].incorrect_answers.map(answer => {
-        answers.push({answer: answer, isCorrect: false});
+      let ques = json.results.map(q => {
+        let answers = [];
+        q.incorrect_answers.map(answer => {
+          answers.push({answer: answer, isCorrect: false, selected: false});
+        });
+        answers.push({
+          answer: q.correct_answer,
+          isCorrect: true,
+          selected: false,
+        });
+        q.answers = answers;
+        return q;
       });
-      answers.push({answer: json.results[0].correct_answer, isCorrect: true});
 
-      setQuestionAnswers(answers);
+      setQuestions(ques);
+      setQuestionAnswers(ques[0].answers);
       setPage(2);
     }
-  }, [numberOfQuestion, categorys, page]);
+  }, [numberOfQuestion, page]);
 
   function setNewQuestion(number) {
+    console.log(number);
     var q = questions[number];
-    let answers = [];
-    q.incorrect_answers.map(answer => {
-      answers.push({answer: answer, isCorrect: false});
-    });
-    answers.push({answer: q.correct_answer, isCorrect: true});
-    setQuestionAnswers(answers);
+    setQuestionAnswers(q.answers);
     setTopText(q.question);
     setQuestion(number);
   }
@@ -75,17 +84,33 @@ export default function ThisOrThat({navigation}) {
   const AnswerItem = ({item}) => {
     return (
       <View style={styles.questionNumberItem}>
-        <Button bg-pastelOrangeBg enableShadow style={styles.button}>
-          <Text
-            style={{
-              width: '100%',
-              textAlign: 'center',
-            }}
-            pastelOrange
-            bold
-            bubblegumSans>
-            {item.answer}
-          </Text>
+        <Button
+          onPress={() => {
+            var q = questions;
+            q[question].answers = q[question].answers.map(answer => {
+              let selected = answer.answer == item.answer;
+              answer.selected = selected;
+              return answer;
+            });
+            setQuestions(q);
+            setQuestionAnswers(q[question].answers);
+          }}
+          bg-pastelOrangeBg
+          enableShadow
+          style={styles.button}>
+          <View style={styles.AnswerItem}>
+            {item.selected && <Icon name="done" size={25} color={'#662900'} />}
+            <Text
+              style={{
+                width: '100%',
+                textAlign: 'center',
+              }}
+              pastelOrange
+              bold
+              bubblegumSans>
+              {item.answer}
+            </Text>
+          </View>
         </Button>
       </View>
     );
@@ -97,6 +122,8 @@ export default function ThisOrThat({navigation}) {
         <Button
           onPress={() => {
             setNumberOfQuestion(item);
+            setTopText('Loading questions...');
+            setPage(4);
           }}
           bg-pastelOrangeBg
           enableShadow
@@ -121,52 +148,21 @@ export default function ThisOrThat({navigation}) {
     );
   };
 
-  const CategoryItem = ({item}) => {
-    const disabled =
-      categorys.length > 0 && !categorys.includes(10) && item.id == 10
-        ? true
-        : categorys.includes(10) && item.id != 10;
-
+  const renderPannableHeader = props => {
+    const {title} = props;
     return (
-      <Button
-        iconOnLeft
-        bg-pastelOrangeBg
-        enableShadow
-        disabled={disabled}
-        onPress={() => {
-          if (categorys.includes(item.id)) {
-            setCategorys(categorys.filter(category => category != item.id));
-          } else {
-            if (item.id == 10) {
-              setCategorys([10]);
-            } else {
-              setCategorys([...categorys, item.id]);
-            }
-          }
-        }}
-        style={{
-          margin: 10,
-
-          width: 150,
-          height: 50,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-          }}>
-          {categorys.includes(item.id) && (
-            <Icon name="done" size={25} color={'#662900'} />
-          )}
-
-          <Text pastelOrange bold bubblegumSans>
-            {item.name}
-          </Text>
+      <View>
+        <View margin-20>
+          <Text>{title}</Text>
         </View>
-      </Button>
+        <View height={2} bg-grey70 />
+      </View>
     );
   };
-  return (
-    <View style={styles.container}>
+
+  const RenderQuestion = props => {
+    console.log(props);
+    return (
       <View style={styles.top}>
         <View style={styles.topTexts}>
           {page == 2 && (
@@ -189,64 +185,64 @@ export default function ThisOrThat({navigation}) {
                   margin: 5,
                 },
               ]}>
-              {topText == ''
-                ? 'Please select number of question: '
-                : decodeHTMLEntities(topText)}
+              {decodeHTMLEntities(topText)}
             </Text>
           </View>
         </View>
         <View style={styles.center}>
-          {page == 1 ? (
-            <View style={styles.categorys}>
-              <FlatList
-                data={DefaultCategorys}
-                extraData={categorys}
-                renderItem={({item}) => <CategoryItem item={item} />}
-                keyExtractor={item => item.id}
-                numColumns={2}
-                columnWrapperStyle={{justifyContent: 'space-between'}}
-                style={{
-                  flex: 1,
-                }}
-              />
-              <View
-                style={{
-                  flex: 0.3,
-                }}>
-                <Button
-                  style={{
-                    height: 50,
-                  }}
-                  onPress={() => {
-                    if (categorys.length != 0) {
-                      setTopText('Loading questions...');
-                      setPage(4);
-                    } else {
-                      alert('Empty');
-                    }
-                  }}
-                  iconSource={iconStyle => {
-                    return (
-                      <View
-                        style={{
-                          marginLeft: 0,
-                        }}>
-                        <Icon name="east" size={25} color={'#662900'} />
-                      </View>
-                    );
-                  }}
-                  iconOnRight
-                  bg-pastelOrangeBg
-                  enableShadow>
-                  <Text pastelOrange bold bubblegumSans>
-                    Save{' '}
-                  </Text>
-                </Button>
-              </View>
+          <FlatList
+            extraData={questions}
+            data={questionAnswers}
+            renderItem={({item}) => <AnswerItem item={item} />}
+          />
+        </View>
+      </View>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {page == 2 ? (
+        <SwipeCards
+          cards={questions}
+          renderCard={cardData => <RenderQuestion {...cardData} />}
+          renderNoMoreCards={() => <RenderQuestion />}
+          loop={true}
+          handleYup={() => {
+            setNewQuestion(question + 1);
+          }}
+          handleNope={() => {
+            setNewQuestion(question - 1);
+          }}
+          handleMaybe={() => {
+            setDialog(true);
+          }}
+          yupText={'Next'}
+          noText={'Back'}
+          hasMaybeAction
+        />
+      ) : (
+        <View style={styles.top}>
+          <View style={styles.topTexts}>
+            <View style={styles.question}>
+              <Text
+                text40
+                pastelOrange
+                style={[
+                  styles.topText,
+                  {
+                    margin: 5,
+                  },
+                ]}>
+                {topText == ''
+                  ? 'Please select number of question: '
+                  : decodeHTMLEntities(topText)}
+              </Text>
             </View>
-          ) : (
+          </View>
+          <View style={styles.center}>
             <FlatList
-              extraData={page}
+              extraData={questions}
               data={page == 0 ? questionNumbers : questionAnswers}
               renderItem={({item}) =>
                 page == 0 ? (
@@ -256,11 +252,11 @@ export default function ThisOrThat({navigation}) {
                 )
               }
             />
-          )}
+          </View>
         </View>
-      </View>
+      )}
       <View style={styles.bottom}>
-        {page == 2 && (
+        {/*page == 2 && (
           <View style={styles.bottom}>
             <View
               style={{
@@ -289,6 +285,9 @@ export default function ThisOrThat({navigation}) {
                 marginRight: 5,
               }}>
               <Button
+                onPress={() => {
+                  setDialog(true);
+                }}
                 style={{
                   height: 50,
                   width: 10,
@@ -330,7 +329,7 @@ export default function ThisOrThat({navigation}) {
               </Button>
             </View>
           </View>
-        )}
+              )*/}
       </View>
     </View>
   );

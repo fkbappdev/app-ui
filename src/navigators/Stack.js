@@ -10,6 +10,7 @@ import LoginAndRegister from '../pages/LoginAndRegister/index';
 import Question from '../pages/Question/index';
 import Options from '../pages/Options/index';
 import Quizzes from '../pages/Quizzes/index';
+import ThisOrThat from '../pages/ThisOrThat/index';
 
 const Stack = createStackNavigator();
 
@@ -67,6 +68,7 @@ export default function StackNavigator() {
             color: '#662900',
           },
           headerTransparent: true,
+          headerMode: 'float',
         }}
       />
 
@@ -81,6 +83,22 @@ export default function StackNavigator() {
             color: '#662900',
           },
           headerTransparent: true,
+          headerMode: 'float',
+        }}
+      />
+
+      <Stack.Screen
+        name="ThisOrThat"
+        component={ThisOrThat}
+        options={{
+          headerTitle: 'This Or That Game',
+          headerTitleAlign: 'center',
+          headerTintColor: '#662900',
+          headerTitleStyle: {
+            color: '#662900',
+          },
+          headerTransparent: true,
+          headerMode: 'float',
         }}
       />
     </Stack.Navigator>
