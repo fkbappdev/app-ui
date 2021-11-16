@@ -6,11 +6,16 @@ import {Button, Text} from 'react-native-ui-lib';
 // import screens
 import Redirect from '../pages/Redirect/index';
 import Splash from '../pages/Splash/index';
-import LoginAndRegister from '../pages/LoginAndRegister/index';
+import Login from '../pages/Login/index';
+import Register from '../pages/Register/index';
+
 import Question from '../pages/Question/index';
 import Options from '../pages/Options/index';
 import Quizzes from '../pages/Quizzes/index';
 import ThisOrThat from '../pages/ThisOrThat/index';
+import PlayerNames from '../pages/PlayerNames/index';
+import QuestionNumbers from '../pages/QuestionNumbers/index';
+import QuestionCategorys from '../pages/QuestionCategorys/index';
 
 const Stack = createStackNavigator();
 
@@ -30,16 +35,40 @@ export default function StackNavigator() {
       />
 
       <Stack.Screen
-        name="LoginAndRegister"
-        component={LoginAndRegister}
+        name="Login"
+        component={Login}
         options={{
-          headerTitle: 'Login & Register',
+          headerTitle: 'Login',
           headerTitleAlign: 'center',
-          headerTintColor: '#662900',
           headerTitleStyle: {
-            color: '#662900',
+            fontFamily: 'Rubik-Bold',
+            fontWeight: 'bold',
+          },
+          headerTintColor: '#6A5AE0',
+          headerTitleStyle: {
+            color: '#6A5AE0',
           },
           headerTransparent: true,
+          headerMode: 'float',
+        }}
+      />
+
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{
+          headerTitle: 'Register',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'Rubik-Bold',
+            fontWeight: 'bold',
+          },
+          headerTintColor: '#6A5AE0',
+          headerTitleStyle: {
+            color: '#6A5AE0',
+          },
+          headerTransparent: true,
+          headerMode: 'float',
         }}
       />
 
@@ -49,9 +78,9 @@ export default function StackNavigator() {
         options={{
           headerTitle: 'Question Page',
           headerTitleAlign: 'center',
-          headerTintColor: '#662900',
+          headerTintColor: '#6A5AE0',
           headerTitleStyle: {
-            color: '#662900',
+            color: '#6A5AE0',
           },
           headerTransparent: true,
         }}
@@ -63,9 +92,11 @@ export default function StackNavigator() {
         options={{
           headerTitle: 'Select an Game',
           headerTitleAlign: 'center',
-          headerTintColor: '#662900',
+          headerTintColor: '#FFF',
           headerTitleStyle: {
-            color: '#662900',
+            color: '#FFF',
+            fontFamily: 'Rubik-Regular',
+            fontWeight: '500',
           },
           headerTransparent: true,
           headerMode: 'float',
@@ -78,9 +109,11 @@ export default function StackNavigator() {
         options={{
           headerTitle: 'Quiz Game',
           headerTitleAlign: 'center',
-          headerTintColor: '#662900',
+          headerTintColor: '#FFF',
           headerTitleStyle: {
-            color: '#662900',
+            color: '#FFF',
+            fontFamily: 'Rubik-Regular',
+            fontWeight: '500',
           },
           headerTransparent: true,
           headerMode: 'float',
@@ -93,9 +126,60 @@ export default function StackNavigator() {
         options={{
           headerTitle: 'This Or That Game',
           headerTitleAlign: 'center',
-          headerTintColor: '#662900',
+          headerTintColor: '#6A5AE0',
           headerTitleStyle: {
-            color: '#662900',
+            color: '#6A5AE0',
+          },
+          headerTransparent: true,
+          headerMode: 'float',
+        }}
+      />
+
+      <Stack.Screen
+        name="PlayerNames"
+        component={PlayerNames}
+        options={{
+          headerTitle: 'Player Names',
+          headerTitleAlign: 'center',
+          headerTintColor: '#FFF',
+          headerTitleStyle: {
+            color: '#FFF',
+            fontFamily: 'Rubik-Regular',
+            fontWeight: '500',
+          },
+          headerTransparent: true,
+          headerMode: 'float',
+        }}
+      />
+
+      <Stack.Screen
+        name="QuestionNumbers"
+        component={QuestionNumbers}
+        options={{
+          headerTitle: 'Select Question Number',
+          headerTitleAlign: 'center',
+          headerTintColor: '#FFF',
+          headerTitleStyle: {
+            color: '#FFF',
+            fontFamily: 'Rubik-Regular',
+            fontWeight: '500',
+          },
+          headerTransparent: true,
+          headerMode: 'float',
+        }}
+      />
+
+      <Stack.Screen
+        name="QuestionCategorys"
+        component={QuestionCategorys}
+        options={{
+          headerTitle: 'Select Question Categorys',
+          headerTitleAlign: 'center',
+          headerTintColor: '#FFF',
+          headerTitleStyle: {
+            color: '#FFF',
+            fontFamily: 'Rubik-Regular',
+            fontWeight: '500',
           },
           headerTransparent: true,
           headerMode: 'float',

@@ -19,7 +19,8 @@ ThemeManager.setComponentTheme('Text', {
   regular: true,
   body: true,
 });
-
+// old colors
+/*
 Colors.loadColors({
   primaryColor: '#FFFFFF',
   secondary: '#FF6821',
@@ -29,11 +30,24 @@ Colors.loadColors({
   pastelOrange: '#662900',
   pastelOrangeBg: '#F4D19B',
 });
+*/
+
+Colors.loadColors({
+  primary: '#6A5AE0',
+  secondary: '#9087E5',
+  pink: '#FF6FA2',
+  pastelPink: '#FFD6DD',
+  pastelBlue: '#C4D0FB',
+  pastelGrey: '#E6E6E6',
+  error: '#ff2442',
+  success: '#00CD8B',
+  text: '#FFFFFF',
+});
 
 Typography.loadTypographies({
   bold: {fontWeight: 'bold', fontSize: 20},
-  bubblegumSans: {
-    fontFamily: 'BubblegumSans-Regular',
+  rubik: {
+    fontFamily: 'Rubik-Regular',
   },
 });
 

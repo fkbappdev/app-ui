@@ -8,22 +8,19 @@ export default StyleSheet.create({
     backgroundColor: '#6A5AE0',
   },
   bottom: {
-    marginBottom: '3%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    width: '100%',
+  },
+  nextButton: {
+    marginRight: 10,
+    marginLeft: 10,
   },
   button: {
-    padding: 10,
-    marginBottom: '5%',
+    marginBottom: 10,
     width: '100%',
     height: 60,
   },
   background: {
     flex: 1,
-  },
-  buttonText: {
-    color: '#fff',
   },
   top: {
     flex: 1,
@@ -33,10 +30,6 @@ export default StyleSheet.create({
   },
   topTexts: {
     justifyContent: 'space-between',
-    width: '100%',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: '5%',
   },
   topText: {
     marginBottom: 10,
@@ -48,21 +41,22 @@ export default StyleSheet.create({
   question: {
     marginTop: '5%',
   },
-  categorys: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-  questionNumberItem: {
-    margin: 10,
-  },
-  roundedDialog: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-  },
-  AnswerItem: {
+  center: {flex: 1, marginTop: '5%'},
+  PlayerNameItem: {
+    height: 60,
+    width: '100%',
+    backgroundColor: '#F4D19B',
+    borderRadius: 50,
+    marginBottom: 10,
     flexDirection: 'row',
+    flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  bottomInput: {
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    width: '100%',
   },
   card: {
     borderRadius: 30,
@@ -72,6 +66,31 @@ export default StyleSheet.create({
     borderBottomEndRadius: 20,*/
     backgroundColor: '#ffffff',
     flex: 1,
+  },
+  inputBase: {
+    borderWidth: 2,
+    borderColor: '#EFEEFC',
+    width: '100%',
+    height: 60,
+    borderRadius: 50,
+    backgroundColor: '#FFF',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  buttonText: {
+    fontFamily: 'Rubik-Bold',
+    textAlign: 'left',
+    color: '#FFF',
+    fontWeight: 'bold',
+  },
+  bottomInput: {
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  input: {
+    width: '100%',
   },
   game: {
     flex: 1,
@@ -97,5 +116,11 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-around',
+  },
+  modeText: {
+    fontSize: 16,
+    color: '#6A5AE0',
+    fontFamily: 'Rubik-Bold',
+    fontWeight: '200',
   },
 });

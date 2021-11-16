@@ -46,7 +46,7 @@ export default function ThisOrThat({navigation}) {
       return;
     } else if (numberOfQuestion != 0 && page == 4) {
       let request = await fetch(
-        `https://opentdb.com/api.php?amount=${numberOfQuestion}&category=9&difficulty=easy&type=multiple`,
+        `https://opentdb.com/api.php?amount=${numberOfQuestion}&category=9&difficulty=easy&type=boolean`,
       );
       let json = await request.json();
 
@@ -148,53 +148,73 @@ export default function ThisOrThat({navigation}) {
     );
   };
 
-  const renderPannableHeader = props => {
-    const {title} = props;
+  const RenderQuestion = props => {
     return (
       <View>
-        <View margin-20>
-          <Text>{title}</Text>
-        </View>
-        <View height={2} bg-grey70 />
-      </View>
-    );
-  };
-
-  const RenderQuestion = props => {
-    console.log(props);
-    return (
-      <View style={styles.top}>
-        <View style={styles.topTexts}>
-          {page == 2 && (
-            <View style={styles.questionText}>
-              <Text text60 pastelOrange style={styles.topText}>
-                Question {question + 1}
-              </Text>
-              <Text text80 pastelOrange style={styles.topText}>
-                /{questions.length}
+        <View style={styles.top}>
+          <View style={styles.topTexts}>
+            {page == 2 && (
+              <View style={styles.questionText}>
+                <Text text60 pastelOrange style={styles.topText}>
+                  Question {question + 1}
+                </Text>
+                <Text text80 pastelOrange style={styles.topText}>
+                  /{questions.length}
+                </Text>
+              </View>
+            )}
+            <View style={styles.question}>
+              <Text
+                text40
+                pastelOrange
+                style={[
+                  styles.topText,
+                  {
+                    margin: 5,
+                  },
+                ]}>
+                {decodeHTMLEntities(topText)}
               </Text>
             </View>
-          )}
-          <View style={styles.question}>
-            <Text
-              text40
-              pastelOrange
-              style={[
-                styles.topText,
-                {
-                  margin: 5,
-                },
-              ]}>
-              {decodeHTMLEntities(topText)}
-            </Text>
           </View>
         </View>
-        <View style={styles.center}>
-          <FlatList
-            extraData={questions}
-            data={questionAnswers}
-            renderItem={({item}) => <AnswerItem item={item} />}
-          />
+        <View style={[styles.bottom]}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'space-around',
+            }}>
+            <Button
+              style={{
+                height: 100,
+                width: 100,
+                backgroundColor: 'red',
+              }}
+              onPress={() => {
+                setNewQuestion(question - 1);
+              }}
+              enableShadow>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Icon name="close" size={25} color={'#fff'} />
+              </View>
+            </Button>
+            <Button
+              style={{
+                height: 100,
+                width: 100,
+                backgroundColor: 'green',
+              }}
+              onPress={() => {
+                setNewQuestion(question - 1);
+              }}
+              enableShadow>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Icon name="done" size={25} color={'#fff'} />
+              </View>
+            </Button>
+          </View>
         </View>
       </View>
     );
@@ -209,10 +229,14 @@ export default function ThisOrThat({navigation}) {
           renderNoMoreCards={() => <RenderQuestion />}
           loop={true}
           handleYup={() => {
-            setNewQuestion(question + 1);
+            if (questions.length > question + 1) {
+              setNewQuestion(question + 1);
+            }
           }}
           handleNope={() => {
-            setNewQuestion(question - 1);
+            if (questions.length < question - 1) {
+              setNewQuestion(question - 1);
+            }
           }}
           handleMaybe={() => {
             setDialog(true);
@@ -241,17 +265,13 @@ export default function ThisOrThat({navigation}) {
             </View>
           </View>
           <View style={styles.center}>
-            <FlatList
-              extraData={questions}
-              data={page == 0 ? questionNumbers : questionAnswers}
-              renderItem={({item}) =>
-                page == 0 ? (
-                  <QuestionNumberItem item={item} />
-                ) : (
-                  <AnswerItem item={item} />
-                )
-              }
-            />
+            {page == 0 && (
+              <FlatList
+                extraData={questions}
+                data={questionNumbers}
+                renderItem={({item}) => <QuestionNumberItem item={item} />}
+              />
+            )}
           </View>
         </View>
       )}

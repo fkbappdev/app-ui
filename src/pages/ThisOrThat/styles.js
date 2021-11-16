@@ -14,6 +14,9 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  bottomText: {
+    padding: '2%',
+  },
   button: {
     padding: 10,
     marginBottom: '5%',

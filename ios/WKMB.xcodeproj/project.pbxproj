@@ -31,6 +31,8 @@
 		3A14EB15475040C1B0243E35 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 671A265C48904546B047A041 /* Octicons.ttf */; };
 		206655B1D38D4145BBC14F6D /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAED5B2C424945E38DFC9DD2 /* SimpleLineIcons.ttf */; };
 		6DF94F784F3D4B0DA11671D0 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C66D77B6A07A4078AC22FD96 /* Zocial.ttf */; };
+		D13F5F5FEBCD4CBB8F2A4079 /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE619E3DCAFB469AA62B4EB0 /* Rubik-Bold.ttf */; };
+		E75F42659E814ECCB800F08D /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31275E4B50AC4598A6300D31 /* Rubik-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		671A265C48904546B047A041 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		EAED5B2C424945E38DFC9DD2 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		C66D77B6A07A4078AC22FD96 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FE619E3DCAFB469AA62B4EB0 /* Rubik-Bold.ttf */ = {isa = PBXFileReference; name = "Rubik-Bold.ttf"; path = "../src/assets/fonts/Rubik-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		31275E4B50AC4598A6300D31 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; name = "Rubik-Regular.ttf"; path = "../src/assets/fonts/Rubik-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +208,8 @@
 				671A265C48904546B047A041 /* Octicons.ttf */,
 				EAED5B2C424945E38DFC9DD2 /* SimpleLineIcons.ttf */,
 				C66D77B6A07A4078AC22FD96 /* Zocial.ttf */,
+				FE619E3DCAFB469AA62B4EB0 /* Rubik-Bold.ttf */,
+				31275E4B50AC4598A6300D31 /* Rubik-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -322,6 +328,8 @@
 				3A14EB15475040C1B0243E35 /* Octicons.ttf in Resources */,
 				206655B1D38D4145BBC14F6D /* SimpleLineIcons.ttf in Resources */,
 				6DF94F784F3D4B0DA11671D0 /* Zocial.ttf in Resources */,
+				D13F5F5FEBCD4CBB8F2A4079 /* Rubik-Bold.ttf in Resources */,
+				E75F42659E814ECCB800F08D /* Rubik-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

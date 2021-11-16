@@ -4,6 +4,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#6A5AE0',
   },
