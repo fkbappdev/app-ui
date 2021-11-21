@@ -124,11 +124,13 @@ export default function StackNavigator() {
         name="ThisOrThat"
         component={ThisOrThat}
         options={{
-          headerTitle: 'This Or That Game',
+          headerTitle: 'This or That?',
           headerTitleAlign: 'center',
-          headerTintColor: '#6A5AE0',
+          headerTintColor: '#FFF',
           headerTitleStyle: {
-            color: '#6A5AE0',
+            color: '#FFF',
+            fontFamily: 'Rubik-Regular',
+            fontWeight: '500',
           },
           headerTransparent: true,
           headerMode: 'float',

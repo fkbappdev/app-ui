@@ -170,13 +170,13 @@ export default function Quizzes({route, navigation}) {
           loop={true}
           handleYup={() => {
             if (question + 1 > questions.length - 1) {
-              setNewQuestion(0);
+              return setNewQuestion(0);
             }
             setNewQuestion(question + 1);
           }}
           handleNope={() => {
             if (question - 1 < 1) {
-              setNewQuestion(0);
+              return setNewQuestion(0);
             }
             setNewQuestion(question - 1);
           }}

@@ -14,37 +14,22 @@ import {FlatList} from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import SwipeCards from 'react-native-swipe-cards';
+import Ripple from 'react-native-material-ripple';
 
-export default function ThisOrThat({navigation}) {
+export default function ThisOrThat({route, navigation}) {
   const [question, setQuestion] = React.useState(0);
   const [questionAnswers, setQuestionAnswers] = React.useState([]);
   const [questions, setQuestions] = React.useState([]);
-  const [numberOfQuestion, setNumberOfQuestion] = React.useState(null);
   const [page, setPage] = React.useState(0);
   const [topText, setTopText] = React.useState('');
 
-  const [dialog, setDialog] = React.useState(false);
-  const [dialogText, setDialogText] = React.useState('');
-
-  // will remove
-  function decodeHTMLEntities(str) {
-    return str
-      .replace(/&nbsp;/gi, ' ')
-      .replace(/&amp;/gi, '&')
-      .replace(/&quot;/gi, '"')
-      .replace(/&lt;/gi, '<')
-      .replace(/&gt;/gi, '>')
-      .replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gim, '');
-  }
-
-  const questionNumbers = [10, 15, 20, 25];
+  const params = route.params;
 
   React.useEffect(async () => {
-    if (numberOfQuestion == null) {
-      setPage(0);
-      setTopText('Please select number of question: ');
-      return;
-    } else if (numberOfQuestion != 0 && page == 4) {
+    var numberOfQuestion = params.questionNumber;
+
+    if (numberOfQuestion != 0 && page == 0) {
+      setTopText('Loading questions...');
       let request = await fetch(
         `https://opentdb.com/api.php?amount=${numberOfQuestion}&category=9&difficulty=easy&type=boolean`,
       );
@@ -69,9 +54,9 @@ export default function ThisOrThat({navigation}) {
 
       setQuestions(ques);
       setQuestionAnswers(ques[0].answers);
-      setPage(2);
+      setPage(1);
     }
-  }, [numberOfQuestion, page]);
+  }, [page]);
 
   function setNewQuestion(number) {
     console.log(number);
@@ -102,6 +87,7 @@ export default function ThisOrThat({navigation}) {
             {item.selected && <Icon name="done" size={25} color={'#662900'} />}
             <Text
               style={{
+                color: '#fff',
                 width: '100%',
                 textAlign: 'center',
               }}
@@ -116,44 +102,25 @@ export default function ThisOrThat({navigation}) {
     );
   };
 
-  const QuestionNumberItem = ({item}) => {
+  const renderPannableHeader = props => {
+    const {title} = props;
     return (
-      <View style={styles.questionNumberItem}>
-        <Button
-          onPress={() => {
-            setNumberOfQuestion(item);
-            setTopText('Loading questions...');
-            setPage(4);
-          }}
-          bg-pastelOrangeBg
-          enableShadow
-          style={[
-            styles.button,
-            {
-              alignSelf: 'center',
-            },
-          ]}>
-          <Text
-            pastelOrange
-            bold
-            bubblegumSans
-            style={{
-              width: '100%',
-              textAlign: 'center',
-            }}>
-            {item}
-          </Text>
-        </Button>
+      <View>
+        <View margin-20>
+          <Text>{title}</Text>
+        </View>
+        <View height={2} bg-grey70 />
       </View>
     );
   };
 
   const RenderQuestion = props => {
+    console.log(props);
     return (
-      <View>
-        <View style={styles.top}>
+      <View style={styles.top}>
+        <View style={styles.card}>
           <View style={styles.topTexts}>
-            {page == 2 && (
+            {page == 1 && (
               <View style={styles.questionText}>
                 <Text text60 pastelOrange style={styles.topText}>
                   Question {question + 1}
@@ -173,47 +140,16 @@ export default function ThisOrThat({navigation}) {
                     margin: 5,
                   },
                 ]}>
-                {decodeHTMLEntities(topText)}
+                {topText}
               </Text>
             </View>
           </View>
-        </View>
-        <View style={[styles.bottom]}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              alignItems: 'space-around',
-            }}>
-            <Button
-              style={{
-                height: 100,
-                width: 100,
-                backgroundColor: 'red',
-              }}
-              onPress={() => {
-                setNewQuestion(question - 1);
-              }}
-              enableShadow>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Icon name="close" size={25} color={'#fff'} />
-              </View>
-            </Button>
-            <Button
-              style={{
-                height: 100,
-                width: 100,
-                backgroundColor: 'green',
-              }}
-              onPress={() => {
-                setNewQuestion(question - 1);
-              }}
-              enableShadow>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Icon name="done" size={25} color={'#fff'} />
-              </View>
-            </Button>
+          <View style={styles.center}>
+            <FlatList
+              extraData={questions}
+              data={questionAnswers}
+              renderItem={({item}) => <AnswerItem item={item} />}
+            />
           </View>
         </View>
       </View>
@@ -222,135 +158,49 @@ export default function ThisOrThat({navigation}) {
 
   return (
     <View style={styles.container}>
-      {page == 2 ? (
+      {page == 1 ? (
         <SwipeCards
           cards={questions}
           renderCard={cardData => <RenderQuestion {...cardData} />}
           renderNoMoreCards={() => <RenderQuestion />}
           loop={true}
           handleYup={() => {
-            if (questions.length > question + 1) {
-              setNewQuestion(question + 1);
+            if (question + 1 > questions.length - 1) {
+              return setNewQuestion(0);
             }
+            setNewQuestion(question + 1);
           }}
           handleNope={() => {
-            if (questions.length < question - 1) {
-              setNewQuestion(question - 1);
+            if (question - 1 < 1) {
+              return setNewQuestion(0);
             }
-          }}
-          handleMaybe={() => {
-            setDialog(true);
+            setNewQuestion(question - 1);
           }}
           yupText={'Next'}
           noText={'Back'}
-          hasMaybeAction
         />
       ) : (
         <View style={styles.top}>
-          <View style={styles.topTexts}>
-            <View style={styles.question}>
-              <Text
-                text40
-                pastelOrange
-                style={[
-                  styles.topText,
-                  {
-                    margin: 5,
-                  },
-                ]}>
-                {topText == ''
-                  ? 'Please select number of question: '
-                  : decodeHTMLEntities(topText)}
-              </Text>
+          <View style={styles.card}>
+            <View style={styles.topTexts}>
+              <View style={styles.question}>
+                <Text
+                  text40
+                  pastelOrange
+                  style={[
+                    styles.topText,
+                    {
+                      margin: 5,
+                    },
+                  ]}>
+                  Please wait...
+                </Text>
+              </View>
             </View>
-          </View>
-          <View style={styles.center}>
-            {page == 0 && (
-              <FlatList
-                extraData={questions}
-                data={questionNumbers}
-                renderItem={({item}) => <QuestionNumberItem item={item} />}
-              />
-            )}
           </View>
         </View>
       )}
-      <View style={styles.bottom}>
-        {/*page == 2 && (
-          <View style={styles.bottom}>
-            <View
-              style={{
-                marginRight: 5,
-              }}>
-              <Button
-                style={{
-                  height: 50,
-                  width: 100,
-                }}
-                onPress={() => {
-                  setNewQuestion(question - 1);
-                }}
-                bg-pastelOrangeBg
-                enableShadow>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Icon name="west" size={25} color={'#662900'} />
-                  <Text pastelOrange bold bubblegumSans>
-                    Back{' '}
-                  </Text>
-                </View>
-              </Button>
-            </View>
-            <View
-              style={{
-                marginRight: 5,
-              }}>
-              <Button
-                onPress={() => {
-                  setDialog(true);
-                }}
-                style={{
-                  height: 50,
-                  width: 10,
-                }}
-                borderRadius={100}
-                bg-pastelOrangeBg
-                enableShadow>
-                <Icon name="add" size={25} color={'#662900'} />
-              </Button>
-            </View>
-            <View
-              style={{
-                marginRight: 5,
-              }}>
-              <Button
-                style={{
-                  height: 50,
-                  width: 100,
-                }}
-                onPress={() => {
-                  setNewQuestion(question + 1);
-                }}
-                iconSource={iconStyle => {
-                  return (
-                    <View
-                      style={{
-                        marginLeft: 0,
-                      }}>
-                      <Icon name="east" size={25} color={'#662900'} />
-                    </View>
-                  );
-                }}
-                iconOnRight
-                bg-pastelOrangeBg
-                enableShadow>
-                <Text pastelOrange bold bubblegumSans>
-                  Next{' '}
-                </Text>
-              </Button>
-            </View>
-          </View>
-              )*/}
-      </View>
+      <View style={styles.bottom}></View>
     </View>
   );
 }
