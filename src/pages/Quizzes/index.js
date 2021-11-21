@@ -23,10 +23,13 @@ export default function Quizzes({route, navigation}) {
   const [page, setPage] = React.useState(0);
   const [topText, setTopText] = React.useState('');
 
+  const [user, setUser] = React.useState('');
+
   const [dialog, setDialog] = React.useState(false);
   const [dialogText, setDialogText] = React.useState('');
 
   const params = route.params;
+  const players = params.players;
 
   React.useEffect(async () => {
     var numberOfQuestion = params.questionNumber;

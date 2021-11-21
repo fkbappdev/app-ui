@@ -17,7 +17,7 @@ export default function Question({navigation}) {
     },
     {
       name: 'Custom',
-      value: 'Custom',
+      value: 'CustomType',
     },
   ];
 

@@ -92,38 +92,4 @@ export default StyleSheet.create({
   input: {
     width: '100%',
   },
-  game: {
-    flex: 1,
-    borderRadius: 30,
-    backgroundColor: '#EFEEFC',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    flexDirection: 'column',
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  gameMode: {
-    margin: 10,
-    alignItems: 'center',
-  },
-  gameModeIcon: {
-    borderTopEndRadius: 20,
-    borderTopStartRadius: 20,
-    borderBottomStartRadius: 20,
-    borderBottomEndRadius: 20,
-    width: 40,
-    height: 40,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  modeText: {
-    fontSize: 16,
-    color: '#6A5AE0',
-    fontFamily: 'Rubik-Bold',
-    fontWeight: '200',
-  },
-  gameModeIcons: {
-    flexDirection: 'row',
-  },
 });

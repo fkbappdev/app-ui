@@ -16,6 +16,9 @@ import ThisOrThat from '../pages/ThisOrThat/index';
 import PlayerNames from '../pages/PlayerNames/index';
 import QuestionNumbers from '../pages/QuestionNumbers/index';
 import QuestionCategorys from '../pages/QuestionCategorys/index';
+import Custom from '../pages/Custom/index';
+import CustomType from '../pages/CustomType/index';
+import CustomAddQuestion from '../pages/CustomAddQuestion/index';
 
 const Stack = createStackNavigator();
 
@@ -176,6 +179,57 @@ export default function StackNavigator() {
         component={QuestionCategorys}
         options={{
           headerTitle: 'Select Question Categorys',
+          headerTitleAlign: 'center',
+          headerTintColor: '#FFF',
+          headerTitleStyle: {
+            color: '#FFF',
+            fontFamily: 'Rubik-Regular',
+            fontWeight: '500',
+          },
+          headerTransparent: true,
+          headerMode: 'float',
+        }}
+      />
+
+      <Stack.Screen
+        name="Custom"
+        component={Custom}
+        options={{
+          headerTitle: 'Custom Game',
+          headerTitleAlign: 'center',
+          headerTintColor: '#FFF',
+          headerTitleStyle: {
+            color: '#FFF',
+            fontFamily: 'Rubik-Regular',
+            fontWeight: '500',
+          },
+          headerTransparent: true,
+          headerMode: 'float',
+        }}
+      />
+
+      <Stack.Screen
+        name="CustomType"
+        component={CustomType}
+        options={{
+          headerTitle: 'Select game mode',
+          headerTitleAlign: 'center',
+          headerTintColor: '#FFF',
+          headerTitleStyle: {
+            color: '#FFF',
+            fontFamily: 'Rubik-Regular',
+            fontWeight: '500',
+          },
+          headerTransparent: true,
+          headerMode: 'float',
+        }}
+      />
+
+      <Stack.Screen
+        name="CustomAddQuestion"
+        component={CustomAddQuestion}
+        options={{
+          headerTitle: 'Add question',
           headerTitleAlign: 'center',
           headerTintColor: '#FFF',
           headerTitleStyle: {
